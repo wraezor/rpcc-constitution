@@ -1,0 +1,94 @@
+\documentclass[10.5pt, twoside]{book}
+\usepackage{etoolbox}
+\usepackage{lipsum}
+
+\usepackage{titlesec}
+
+\setlength\aftertitleunit{\baselineskip}
+
+\titleformat{\chapter}[display]
+  {\normalfont\huge\bfseries}{}{0pt}{\Huge}
+\titleformat{name=\chapter,numberless}[display]
+  {\normalfont\huge\bfseries}{}{0pt}{\Huge}
+\titlespacing*{\chapter}{0pt}{50pt}{*2}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LO,RE]{\textsl{\rightmark}}
+\fancyfoot[C]{\thepage}
+
+\usepackage{enumitem}
+\usepackage{marginnote}
+\usepackage[paperwidth=7in, paperheight=10in, top=.8in, bottom=.6in, inner=.65in, outer=2.1in, marginparwidth=1.4in, marginparsep=.15in, showframe]{geometry}
+
+\usepackage{bibleref}
+\usepackage{indextools}
+\makeindex[title=Subject Index]
+\makeindex[name=scr,title=Scripture Index]
+\renewcommand{\biblerefindex}{\index[scr]}
+\newcommand\bv[2]{\ibibleverse{#1}(#2)}
+
+\renewcommand{\thechapter}{\Alph{chapter}}%
+\preto\chapter{%
+  \clearpage
+  \renewcommand{\thepage}{\thechapter-\arabic{page}}%
+  \preto\chapter{\clearpage\setcounter{page}{1}}%
+}
+
+
+% Footnote counter
+\newcounter{mgncount}
+\renewcommand\themgncount{\arabic{mgncount} }
+
+% Footnote font
+\let\oldmarginpar\marginpar
+\renewcommand\marginpar[1]{\-\oldmarginpar[\raggedleft\footnotesize #1]{\raggedright\footnotesize #1}}
+
+% Footnote \mfn command
+\newcommand\mfn[1]{\refstepcounter{mgncount}\marginpar{{$^\themgncount$}#1}\footnotemark\,}
+
+% Footnote vertical spacing
+\setlength{\marginparpush}{6pt}
+
+\setcounter{tocdepth}{2}
+\setcounter{secnumdepth}{0}
+
+
+\usepackage{xpatch}
+
+\makeatletter
+\xpatchcmd{\@chapter}{\addcontentsline{toc}{chapter}{\protect\numberline{\thechapter}#1}}{%
+                      \addcontentsline{toc}{chapter}{\protect\numberline{}#1}}{\typeout{Success}}{\typeout{Failed!}}
+\makeatother
+
+\hyphenation{pell-ent-esque vesti-bul-um}
+
+
+\begin{document}
+
+% Paragraph vertical spacing
+\setlength{\parskip}{5pt}
+
+\newgeometry{top=1in, bottom=1in, inner=1in, outer=1in}
+
+\title{Constitution of the Reformed Presbyterian Church}
+\maketitle
+
+\tableofcontents
+
+\frontmatter
+\input{preface.tex}
+
+\restoregeometry
+\mainmatter
+%\setcounter{chapter}{0}
+
+\input{doctrinalstandards.tex}
+\input{worship.tex}
+\input{government.tex}
+\input{vows.tex}
+\input{forms.tex}
+\input{indices.tex}
+
+\end{document}
