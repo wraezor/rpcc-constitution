@@ -1,6 +1,5 @@
 \documentclass[12pt, twoside]{book}
 \extrafloats{100}
-\widowpenalty10000
 
 \emergencystretch 3em
 
@@ -28,10 +27,12 @@
 \renewcommand{\headrulewidth}{0pt}
 \fancyfoot[C]{\thepage}
 
-\usepackage[paperwidth=7in, paperheight=10in, top=.8in, bottom=.8in, inner=.8in, outer=.8in]{geometry}
+%\usepackage{enumitem}
+%\usepackage{marginnote}
+\usepackage{marginfix}
+\usepackage[paperwidth=7in, paperheight=10in, top=.8in, bottom=.8in, inner=.65in, outer=2.4in, marginparwidth=1.7in, marginparsep=.25in,]{geometry}
 
 \usepackage{bibleref}
-
 \usepackage{indextools}
 \makeindex[title=Subject Index]
 \makeindex[name=scr,title=Scripture Index]
@@ -45,27 +46,25 @@
   \preto\chapter{\clearpage\setcounter{page}{1}}%
 }
 
+\preto\section{%
+  \setcounter{footnote}{0}%
+  \setcounter{mgncount}{0}%
+}
 \titlespacing*{\section}{0pt}{12ex}{6ex}
 
-% Footnote
-\usepackage[hang,flushmargin,perpage,norule]{footmisc}
-
-
-\usepackage{dblfnote}
-\DFNalwaysdouble
+% Footnote counter
+\newcounter{mgncount}
+\renewcommand\themgncount{\arabic{mgncount} }
 
 % Footnote font
 %\renewcommand{\footnotesize}{\scriptsize}
-%\let\oldfootnote\footnote
-%\renewcommand\footnote[1]{\-\oldfootnote[\raggedleft\footnotesize #1]{\raggedright\footnotesize #1}}
+\let\oldmarginpar\marginpar
+\renewcommand\marginpar[1]{\-\oldmarginpar[\raggedleft\footnotesize #1]{\raggedright\footnotesize #1}}
 
 
 % Footnote \mfn command
-%\newcommand\mfn[1]{\refstepcounter{mgncount}\footnotetext[\themgncount]{#1}\footnotemark\,}
-
-%\newcommand\mfn[1]{\footnote{#1}\footnotemark\,}
-\let\mfn\footnote
-
+\newcommand\mfn[1]{\refstepcounter{mgncount}\marginpar{{$\textbf{\themgncount}$}#1}\footnotemark\,}
+%\newcommand\mfn[1]{\refstepcounter{mgncount}\marginnote{{$\textbf{\themgncount}$}#1}\footnotemark\,}
 
 % Footnote vertical spacing
 \setlength{\marginparpush}{6pt}
