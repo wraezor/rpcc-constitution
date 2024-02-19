@@ -4,22 +4,39 @@
 
 \emergencystretch 3em
 
-\usepackage{etoolbox}
-\usepackage{lipsum}
+% Add required packages
+\usepackage{etoolbox} % Not sure
+\usepackage{lipsum} % For testing, probably can be removed
+\usepackage{titlesec} % Not sure
+\usepackage{parskip} % Not sure
+\usepackage{libertine} % Font package
+\usepackage{enumitem} % For managing list numbering/formats (Used in directories)
+\usepackage[hang,flushmargin,perpage,norule]{footmisc} % For general footnote management
+\usepackage{dblfnote} % For two columns of footnotes
 
-\usepackage{titlesec}
-\usepackage{parskip}
+%%%%% Numbering for Directory for Worship %%%%%
+% Numbering for chapters and paragraphs
+\newlist{outerlst}{enumerate}{10}
+\setlist[outerlst]{label=}
 
-%\usepackage{gentium}
-\usepackage{libertine}
+\newlist{innerlst}{enumerate}{1}
+\setlist*[innerlst]{label=\textbf{\arabic{outerlsti}.\arabic*}. , resume}
 
-\setlength\aftertitleunit{\baselineskip}
+% Hide default chapter numbering (chapters = book parts)
+\setcounter{secnumdepth}{0}
 
+
+%\setlength\aftertitleunit{\baselineskip}  %Not sure what this does/did
+
+% Format the chapter titles (Hide "Chapter" text and numbering)
 \titleformat{\chapter}[display]
   {\normalfont\huge\bfseries}{}{0pt}{\Huge}
 \titleformat{name=\chapter,numberless}[display]
   {\normalfont\huge\bfseries}{}{0pt}{\Huge}
+
+% Set chapter and section titles down from top of page
 \titlespacing*{\chapter}{0pt}{50pt}{*2}
+\titlespacing*{\section}{0pt}{12ex}{6ex}
 
 \usepackage{fancyhdr}
 \pagestyle{fancy}
@@ -45,14 +62,11 @@
   \preto\chapter{\clearpage\setcounter{page}{1}}%
 }
 
-\titlespacing*{\section}{0pt}{12ex}{6ex}
-
-% Footnote
-\usepackage[hang,flushmargin,perpage,norule]{footmisc}
 
 
-\usepackage{dblfnote}
+% Double-footnote formatting
 \DFNalwaysdouble
+\setlength\DFNcolumnsep{3em}
 
 % Footnote font
 %\renewcommand{\footnotesize}{\scriptsize}
@@ -73,7 +87,7 @@
 \setlength{\parskip}{16pt}
 
 \setcounter{tocdepth}{2}
-\setcounter{secnumdepth}{0}
+
 
 
 \usepackage{xpatch}
@@ -87,8 +101,6 @@
 
 
 \begin{document}
-
-
 
 \newgeometry{top=1in, bottom=1in, inner=1in, outer=1in}
 
@@ -106,10 +118,11 @@
 
 %\input{doctrinalstandards.tex}
 %\input{worship.tex}
-%\input{government.tex}
-%\input{vows.tex}
 %\input{forms.tex}
 %\input{indices.tex}
+
 \input{wcf.tex}
+\input{worship.tex}
+\input{vows.tex}
 
 \end{document}
